@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  productmanager-api:
+    build: .
+    container_name: productmanager-api
+    restart: always
+    ports:
+      - ${PRODUCTMANAGER_API_PORT}:3000
+    env_file:
+      - ./env.list
+  db:
+    image: mysql:${MYSQL_VERSION}
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - ${MYSQL_PORT}:3306
+    volumes:
+      - ${DB_VOLUME}:/var/lib/mysql
+volumes:
+  db-volume:
